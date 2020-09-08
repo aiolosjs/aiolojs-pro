@@ -1,6 +1,4 @@
-import { Reducer } from 'redux';
-import { routerRedux } from 'dva';
-import { Effect } from 'dva';
+import { history, Reducer, Effect } from 'umi';
 import { message } from 'antd';
 
 import { queryPost, query } from '@/services/api';
@@ -32,7 +30,7 @@ export interface LoginModelType {
   };
 }
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Model: LoginModelType = {
   namespace: 'login',
@@ -53,12 +51,12 @@ const Model: LoginModelType = {
           isRefreshCode: false,
         },
       });
+
       Object.assign(payload, {
-        mobileValid: true,
+        mobileValid: false,
       });
-      console.log('payload',payload);
       const formData = new FormData();
-      Object.keys(payload).forEach(key => {
+      Object.keys(payload).forEach((key) => {
         formData.append(key, payload[key]);
       });
 
@@ -84,7 +82,7 @@ const Model: LoginModelType = {
         localStorage.setItem('token', token);
 
         yield call(delay, 300);
-        yield put(routerRedux.replace('/'));
+        history.replace('/');
       } else if (code === 202) {
         const { mobiles = [] } = body;
 
@@ -122,15 +120,16 @@ const Model: LoginModelType = {
 
       if (code === 200) {
         const { token } = body;
+
         localStorage.setItem('token', token);
 
         yield call(delay, 300);
-        yield put(routerRedux.replace('/'));
+        history.replace('/');
       }
     },
 
     *getImageCaptcha(_, { call, put }) {
-      const response = yield call(query, '/sys/login');
+      const response = yield call(query, {}, '/sys/login');
       if (response) {
         const { code, body } = response;
         if (code === 200) {
@@ -156,7 +155,7 @@ const Model: LoginModelType = {
     },
     *logout(_, { call, put }) {
       if (window.location.pathname !== '/user/login') {
-        yield call(query, '/sys/logout');
+        yield call(query, {}, '/sys/logout');
         localStorage.removeItem('token');
         yield put({
           type: 'changeLoginStatus',
@@ -167,7 +166,9 @@ const Model: LoginModelType = {
             mobileValid: false,
           },
         });
-        yield put(routerRedux.push('/user/login'));
+        history.replace({
+          pathname: '/user/login',
+        });
       }
     },
   },

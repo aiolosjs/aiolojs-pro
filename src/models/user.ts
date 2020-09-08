@@ -1,4 +1,4 @@
-import { Reducer,Effect } from 'umi';
+import { Reducer, Effect } from 'umi';
 import { message } from 'antd';
 import { queryCurrent, query as queryUsers } from '@/services/user';
 import { update } from '@/services/api';
@@ -106,7 +106,7 @@ const UserModel: UserModelType = {
         },
       });
       if (response) {
-        const { code = 200 } = response;
+        const { code } = response;
         if (code === 200) {
           yield put({
             type: 'modalVisible',
@@ -128,9 +128,14 @@ const UserModel: UserModelType = {
 
   reducers: {
     saveCurrentUser(state, action) {
+      const { btn = [] } = action.payload;
       return {
         ...state,
-        currentUser: action.payload || {},
+
+        currentUser: {
+          btnAuth: btn,
+          ...action.payload,
+        },
       };
     },
     modalVisible(state, { payload }) {

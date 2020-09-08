@@ -58,7 +58,7 @@ const accountManageModelType: AccountManageModelType = {
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryPost, payload, '/sys/user/list');
       if (response) {
-        const { code = 200, body } = response;
+        const { code, body } = response;
         if (code === 200) {
           yield put({
             type: 'save',
@@ -84,7 +84,7 @@ const accountManageModelType: AccountManageModelType = {
         },
       });
       if (response) {
-        const { code = 200, body } = response;
+        const { code, body } = response;
         if (code === 200) {
           yield put({
             type: 'modalVisible',
@@ -98,8 +98,8 @@ const accountManageModelType: AccountManageModelType = {
               tableData: body,
             },
           });
+          message.success('修改成功');
         }
-        message.success('修改成功');
       }
     },
     *updatePassword({ payload }, { call, put }) {
@@ -117,7 +117,7 @@ const accountManageModelType: AccountManageModelType = {
         },
       });
       if (response) {
-        const { code = 200, body } = response;
+        const { code, body } = response;
         if (code === 200) {
           yield put({
             type: 'modalVisible',
@@ -131,8 +131,8 @@ const accountManageModelType: AccountManageModelType = {
               tableData: body,
             },
           });
+          message.success('密码修改成功');
         }
-        message.success('密码修改成功');
       }
     },
     *changeStatus({ payload }, { call, put }) {
@@ -150,7 +150,7 @@ const accountManageModelType: AccountManageModelType = {
         },
       });
       if (response) {
-        const { code = 200, body } = response;
+        const { code, body } = response;
         if (code === 200) {
           yield put({
             type: 'modalVisible',
@@ -164,8 +164,8 @@ const accountManageModelType: AccountManageModelType = {
               tableData: body,
             },
           });
+          message.success('状态修改成功');
         }
-        message.success('状态修改成功');
       }
     },
     *create({ payload }, { call, put }) {
@@ -183,7 +183,7 @@ const accountManageModelType: AccountManageModelType = {
         },
       });
       if (response) {
-        const { code = 200, body } = response;
+        const { code, body } = response;
         if (code === 200) {
           yield put({
             type: 'modalVisible',
@@ -197,14 +197,14 @@ const accountManageModelType: AccountManageModelType = {
               tableData: body,
             },
           });
+          message.success('添加成功');
         }
-        message.success('添加成功');
       }
     },
     *remove({ payload }, { call, put }) {
       const response = yield call(remove, payload, '/sys/role/delete');
       if (response) {
-        const { code = 200, body } = response;
+        const { code, body } = response;
         if (code === 200) {
           yield put({
             type: 'save',
@@ -236,14 +236,6 @@ const accountManageModelType: AccountManageModelType = {
         ...state,
         tableData: {
           ...tableData,
-          list: tableData.list.map((record) => {
-            const { groupAuthorizedIds = [] } = record;
-
-            return {
-              ...record,
-              groupAuthorizedIds: groupAuthorizedIds.map((gid) => `${gid}`),
-            };
-          }),
         },
       };
     },

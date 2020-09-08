@@ -1,6 +1,4 @@
 import { ColumnProps } from 'antd/lib/table';
-import { TreeNode } from 'antd/lib/tree-select';
-import { FormComponentProps } from 'antd/lib/form/Form';
 import { RenderFormItemProps } from '@/core/common/renderFormItem';
 
 const formItemProps = {
@@ -12,8 +10,8 @@ const formItemProps = {
   },
 };
 
-function formatter(node: any[] = []): TreeNode[] {
-  return node.map(item => {
+function formatter(node: any[] = []): any[] {
+  return node.map((item) => {
     const { key, value } = item;
 
     const result = {
@@ -39,11 +37,7 @@ export interface PageConfigProps<T> {
   detailFormItems?: RenderFormItemProps[];
 }
 
-interface IContext {
-  current?: FormComponentProps;
-}
-
-function pageConfig<T>(context?: IContext): PageConfigProps<T> {
+function pageConfig<T>(): PageConfigProps<T> {
   return {
     name: '角色管理',
     path: 'permission/rolemanage',
@@ -66,13 +60,13 @@ function pageConfig<T>(context?: IContext): PageConfigProps<T> {
       },
     ],
     searchForms: [
-
       {
         widget: 'AInput',
         name: 'roleName',
         label: '角色名称',
         formItemProps,
         widgetProps: {
+          allowClear: true,
         },
       },
     ],
@@ -98,7 +92,7 @@ function pageConfig<T>(context?: IContext): PageConfigProps<T> {
         colSpan: 24,
         formItemProps,
         formatter,
-        action: "/sys/menu/dic",
+        action: '/sys/menu/dic',
         treeCheckParentStrictly: true,
         widgetProps: {
           defaultExpandAll: true,
@@ -115,9 +109,9 @@ function pageConfig<T>(context?: IContext): PageConfigProps<T> {
         required: false,
         colSpan: 24,
         formItemProps,
-        widgetProps:{
+        widgetProps: {
           autoSize: { minRows: 5, maxRows: 10 },
-        }
+        },
       },
     ],
   };

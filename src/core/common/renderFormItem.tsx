@@ -1,8 +1,8 @@
 import React from 'react';
 import * as AiolosJSComponents from '@aiolosjs/components';
 import { IBaseWidgetProps } from '@aiolosjs/components/lib/form/types';
+import { asyncFn } from '@/utils/utils';
 
-import { query } from '@/services/api';
 import { tuple } from '@/utils/types';
 
 const WidgetTypes = tuple(
@@ -40,10 +40,6 @@ export interface RenderFormItemProps extends IBaseWidgetProps {
   [key: string]: any;
 }
 
-function asyncFn(params: string): Promise<any> {
-  return query(params).then((res) => res.body);
-}
-
 export default <T extends WidgetType>(item: RenderFormItemProps) => {
   const { label, widget, rules = [], required, widgetProps = {}, ...restWidgetProps } = item;
   const text = widget.includes('AInput') ? '请输入' : '请选择';
@@ -78,8 +74,6 @@ export default <T extends WidgetType>(item: RenderFormItemProps) => {
       />
     );
   }
-
-
 
   const WidgetComponent = AiolosJSComponents[widget];
 

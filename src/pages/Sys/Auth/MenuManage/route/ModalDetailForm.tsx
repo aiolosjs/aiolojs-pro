@@ -6,8 +6,9 @@ import { RadioChangeEvent } from 'antd/lib/radio/interface';
 import { AInput, ARadioGroup, ADynamicTree } from '@aiolosjs/components';
 import AInputNumber from '@aiolosjs/components/lib/form/ainput/number';
 import AInputTextArea from '@aiolosjs/components/lib/form/ainput/textarea';
-import { MenuManageTableDataProps } from '../models/menumanage';
+import { asyncFn } from '@/utils/utils';
 import { OperatorKeys } from '.';
+import { MenuManageTableDataProps } from '../models/menumanage';
 
 export type ModelRef = {
   form: FormInstance;
@@ -85,7 +86,6 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
       menuType = 1,
       path = '',
       icon = '',
-      isActive = 1,
       menuOrder = 99,
       permission = '',
       remark = '',
@@ -202,6 +202,7 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
                 },
               ]}
               action="/sys/menu/dic"
+              asyncFn={asyncFn}
               formatter={treeNodeFormatter}
               widgetProps={{
                 blockNode: true,
@@ -267,29 +268,8 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
             </Col>
           ) : null}
 
-          <Col span={24}>
-            <ARadioGroup
-              name="isActive"
-              initialValue={isActive}
-              label="状态"
-              radioOptions={[
-                {
-                  value: 1,
-                  label: '通过',
-                },
-                {
-                  value: 2,
-                  label: '拒绝',
-                },
-              ]}
-              rules={[
-                {
-                  required: true,
-                  message: ' 请选择状态',
-                },
-              ]}
-              formItemProps={formItemProps}
-            />
+          <Col span={0}>
+            <AInput name="isActive" initialValue={1} />
           </Col>
           <Col span={24}>
             <AInputNumber

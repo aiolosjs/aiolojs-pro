@@ -3,7 +3,6 @@ import { Button, Card, Modal, Popconfirm, Row, Col } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'umi';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { PaginationConfig } from 'antd/lib/pagination';
 import AuthBlock from '@/components/AuthBlock';
 import { useQueryFormParams } from '@/utils/hooks';
 import SearchForms from '@/components/SearchForm';
@@ -70,7 +69,7 @@ export default (): React.ReactNode => {
     setCurrentItem({});
   };
 
-  const chnageStatusHandle = (record: AccountManageTableDataProps) => {
+  const changeStatusHandle = (record: AccountManageTableDataProps) => {
     const { id, isActive } = record;
     modelReduceType.current = 'changeStatus';
     setFormUpdate({ id, isActive: isActive === 1 ? 0 : 1 });
@@ -85,12 +84,24 @@ export default (): React.ReactNode => {
     } else if (modalType === 'update') {
       modelReduceType.current = 'update';
       setFormUpdate(fields);
+    } else if (modalType === 'updatePassword') {
+      modelReduceType.current = 'updatePassword';
+      setFormUpdate(fields);
+    } else {
+      modelReduceType.current = 'changeStatus';
+      setFormUpdate(fields);
     }
   };
 
   const renderSearchForm = () => {
     function onSubmit(queryValues: any) {
       modelReduceType.current = 'fetch';
+      const { sysGroupId } = queryValues;
+      const sysGroupIds = Array.isArray(sysGroupId) ? sysGroupId.map((group) => group.value) : null;
+      Object.assign(queryValues, {
+        sysGroupId: sysGroupIds,
+      });
+
       const query = formaterObjectValue(queryValues);
       setQuery(query);
     }
@@ -131,7 +142,7 @@ export default (): React.ReactNode => {
                       title={`确定${statusText}吗？`}
                       placement="topRight"
                       onConfirm={() => {
-                        chnageStatusHandle(record);
+                        changeStatusHandle(record);
                       }}
                     >
                       <a>{statusText}</a>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { PageLoading } from '@ant-design/pro-layout';
 import { Redirect, connect, ConnectProps } from 'umi';
-import { stringify } from 'querystring';
 import { ConnectState } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
 
@@ -35,16 +34,13 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
     const { isReady } = this.state;
     const { children, loading, currentUser } = this.props;
 
-    const isLogin = currentUser && currentUser.user && currentUser.user.id;
-    const queryString = stringify({
-      redirect: window.location.href,
-    });
+    const isLogin = currentUser?.user?.id;
 
     if ((!isLogin && loading) || !isReady) {
       return <PageLoading />;
     }
     if (!isLogin && window.location.pathname !== '/user/login') {
-      return <Redirect to={`/user/login?${queryString}`} />;
+      return <Redirect to="/user/login" />;
     }
     return children;
   }

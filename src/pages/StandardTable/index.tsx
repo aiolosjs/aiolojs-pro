@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Card, Modal, Popconfirm, Row, Col } from 'antd';
+import { Button, Card, Modal, Popconfirm, Row, Col, Tooltip, Drawer } from 'antd';
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 import AuthBlock from '@/components/AuthBlock';
@@ -7,51 +7,45 @@ import { useSelector, useDispatch } from 'umi';
 import { useQueryFormParams } from '@/utils/hooks';
 import SearchForms from '@/components/SearchForm';
 import TableList from '@/components/TableList';
-import { DvaLoadingState } from '@/utils/types';
 import { formaterObjectValue, formItemAddInitValue } from '@/utils/utils';
 import { RenderFormItemProps } from '@/core/common/renderFormItem';
-import {
-  RoleManageTableDataProps,
-  RoleManageState,
-} from '@/pages/Sys/Auth/RoleManage/models/rolemanage';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import DetailFormInfo, { ModelRef } from './ModalDetailForm';
 
-import { OperatorKeys, OperatorType } from './interface';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { StandardTableDataProps } from './model';
+import DetailFormInfo, { ModelRef } from './ModalDetailForm';
+import DetailInfo from './Detail';
+
+import { OperatorKeys, OperatorType, IRootState } from './interface';
 
 import pageConfig from './pageConfig';
 
-interface IRootState {
-  rolemanage: RoleManageState;
-  loading: DvaLoadingState;
-}
-
 const operatorTypeDic: OperatorType = {
-  create: '新建账号',
-  update: '修改账号',
+  create: '新建用户',
+  update: '修改用户',
 };
 
 export default (): React.ReactNode => {
   const dispatch = useDispatch();
-  const { rolemanage, loading } = useSelector((state: IRootState) => state);
-  const { modalVisible, confirmLoading } = rolemanage;
+  const { standardtable, loading } = useSelector((state: IRootState) => state);
+  const { modalVisible, confirmLoading } = standardtable;
 
   const [payload, { setQuery, setPagination, setFormAdd, setFormUpdate }] = useQueryFormParams();
   const modelReduceType = useRef<OperatorKeys>('fetch');
   const detailFormRef = useRef<ModelRef | null>(null);
 
   const { searchForms = [], tableColumns = [], detailFormItems = [] } = pageConfig<
-    RoleManageTableDataProps
+    StandardTableDataProps
   >();
 
   const [modalTitle, setModalTitle] = useState<string | undefined>();
-  const [, setCurrentItem] = useState<RoleManageTableDataProps | {}>({});
+  const [currentItem, setCurrentItem] = useState<StandardTableDataProps | {}>({});
   const [modalType, setModalType] = useState<OperatorKeys>();
   const [formItems, setFormItems] = useState<RenderFormItemProps[]>([]);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   useEffect(() => {
     dispatch({
-      type: `rolemanage/${modelReduceType.current}`,
+      type: `standardtable/${modelReduceType.current}`,
       payload,
     });
   }, [payload]);
@@ -63,14 +57,14 @@ export default (): React.ReactNode => {
 
   const changeModalVisibel = (flag: boolean) => {
     dispatch({
-      type: 'rolemanage/modalVisible',
+      type: 'standardtable/modalVisible',
       payload: {
         modalVisible: flag,
       },
     });
   };
 
-  const showModalVisibel = (type: OperatorKeys, record: RoleManageTableDataProps | {}) => {
+  const showModalVisibel = (type: OperatorKeys, record: StandardTableDataProps | {}) => {
     updateFormItems(record);
     setModalTitle(operatorTypeDic[type]);
     changeModalVisibel(true);
@@ -81,6 +75,15 @@ export default (): React.ReactNode => {
   const hideModalVisibel = () => {
     changeModalVisibel(false);
     setCurrentItem({});
+  };
+
+  const showDrawer = (record: StandardTableDataProps | {}) => {
+    setDrawerVisible(true);
+    setCurrentItem(record);
+  };
+
+  const hideDrawer = () => {
+    setDrawerVisible(false);
   };
 
   const deleteTableRowHandle = (id: number) => {
@@ -122,12 +125,12 @@ export default (): React.ReactNode => {
         title: '操作',
         width: 90,
         dataIndex: 'actions',
-        render: (_: any, record: RoleManageTableDataProps) => {
+        render: (_: any, record: StandardTableDataProps) => {
           return (
             <div>
               <Row>
-                <AuthBlock authority="sys:role:update">
-                  <Col span={12}>
+                <Col span={12}>
+                  <Tooltip title="编辑">
                     <a
                       onClick={() => {
                         showModalVisibel('update', record);
@@ -135,23 +138,26 @@ export default (): React.ReactNode => {
                     >
                       <EditOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }} />
                     </a>
-                  </Col>
-                </AuthBlock>
-                <AuthBlock authority="sys:role:delete">
-                  <Col span={12}>
-                    <Popconfirm
-                      title="确定删除吗？"
-                      placement="topRight"
-                      onConfirm={() => {
-                        deleteTableRowHandle(record.id);
-                      }}
-                    >
+                  </Tooltip>
+                </Col>
+                <Col span={12}>
+                  <Popconfirm
+                    title="确定删除吗？"
+                    placement="topRight"
+                    onConfirm={() => {
+                      deleteTableRowHandle(record.id);
+                    }}
+                  >
+                    <Tooltip title="删除">
                       <a>
                         <DeleteOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }} />
                       </a>
-                    </Popconfirm>
-                  </Col>
-                </AuthBlock>
+                    </Tooltip>
+                  </Popconfirm>
+                </Col>
+                <Col span={24}>
+                  <a onClick={() => showDrawer(record)}>查看详情</a>
+                </Col>
               </Row>
             </div>
           );
@@ -161,10 +167,10 @@ export default (): React.ReactNode => {
   };
 
   const renderTableList = () => {
-    const tableLoading = loading.models.rolemanage;
+    const tableLoading = loading.models.standardtable;
     const {
       tableData: { list, pagination },
-    } = rolemanage;
+    } = standardtable;
     const newTableColumns = [...tableColumns, ...extraTableColumnRender()];
 
     function onChange(current: number, pageSize?: number) {
@@ -173,7 +179,7 @@ export default (): React.ReactNode => {
     }
 
     return (
-      <TableList<RoleManageTableDataProps>
+      <TableList<StandardTableDataProps>
         bordered={false}
         loading={tableLoading}
         columns={newTableColumns}
@@ -194,7 +200,7 @@ export default (): React.ReactNode => {
               type="primary"
               onClick={() => showModalVisibel('create', {})}
             >
-              新建角色
+              新建
             </Button>
           </div>
           {renderTableList()}
@@ -210,6 +216,20 @@ export default (): React.ReactNode => {
       >
         <DetailFormInfo ref={detailFormRef} formItems={formItems} />
       </Modal>
+      <Drawer
+        destroyOnClose
+        title="详情"
+        width="50%"
+        placement="right"
+        onClose={hideDrawer}
+        visible={drawerVisible}
+        zIndex={100}
+        style={{
+          overflow: 'auto',
+        }}
+      >
+        <DetailInfo currentItem={currentItem} />
+      </Drawer>
     </PageHeaderWrapper>
   );
 };

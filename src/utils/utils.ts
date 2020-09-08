@@ -2,12 +2,27 @@ import { parse } from 'querystring';
 import pathRegexp from 'path-to-regexp';
 import { Route } from '@/models/connect';
 import { RenderFormItemProps } from '@/core/common/renderFormItem';
+import { query } from '@/services/api';
+
+export const whiteListPath = ['/account/settings'];
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
 const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
 type ConfigRoutes = {
   path?: string;
   routes?: ConfigRoutes[];
+};
+
+export const asyncFn = (params: string): Promise<any> => {
+  return query(params).then((res) => res.body);
+};
+
+export const delay = (timeout = 300) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timeout);
+  });
 };
 
 const getFlatRoutePath = (router: ConfigRoutes[] = []): string[] => {

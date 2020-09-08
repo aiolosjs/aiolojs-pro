@@ -24,7 +24,7 @@ const proSettings = {
   title: '系统脚手架',
   pwa: false,
   debugLocal: false,
-  debugLocalDomain: '',
+  debugLocalDomain: 'http://192.168.22.52:9000',
   isLocalMenus: env === 'development',
 } as DefaultSettings;
 

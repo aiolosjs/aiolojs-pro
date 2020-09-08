@@ -71,7 +71,7 @@ const accountManageModelType: AccountManageModelType = {
   },
   effects: {
     *fetch(_, { call, put }) {
-      const response = yield call(query, '/sys/menu/tree');
+      const response = yield call(query, {}, '/sys/menu/tree');
       if (response) {
         const { code, body } = response;
         if (code === 200) {

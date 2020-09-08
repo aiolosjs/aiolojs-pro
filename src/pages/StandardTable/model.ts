@@ -1,74 +1,55 @@
 import { message } from 'antd';
 import { Reducer, Effect } from 'umi';
-import { create, update, remove, query } from '@/services/api';
+import { query, create, update, remove, queryPost } from '@/services/api';
+import { ITableData } from '@/utils/types';
+import { delay } from '@/utils/utils';
 
-function formatter(data: CustomManageTableDataProps[] = []) {
-  return data.map((item) => {
-    const { id } = item;
-    const result = {
-      ...item,
-      key: id,
-    };
-    if (item.children && item.children.length !== 0) {
-      result.children = formatter(item.children);
-    } else {
-      delete result.children;
-    }
-    return result;
-  });
-}
-
-export interface CustomManageTableDataProps {
+export interface StandardTableDataProps {
   id: number;
-  groupName?: string;
-  parentId?: number;
-  groupDna?: string;
-  level?: number;
-  linkman?: string;
-  mobile?: string;
-  createdAt?: string;
-  createdBy?: string;
-  updatedAt?: string;
-  updatedBy?: string;
-  isActive?: number;
-  isDeleted?: number;
-  remark?: string;
-  children?: CustomManageTableDataProps[];
-  parentName?: string;
+  name: string;
+  sex: string;
+  remark: string;
 }
 
-export interface CustomManageState {
-  tableData: CustomManageTableDataProps[];
+export interface StandardTableState {
+  tableData: ITableData<StandardTableDataProps>;
   modalVisible?: boolean;
   confirmLoading?: boolean;
+  detailInfo: Partial<StandardTableDataProps>;
 }
 
-export interface AccountManageModelType {
-  namespace: 'custommanage';
-  state: CustomManageState;
+export interface StandardTableModelType {
+  namespace: 'standardtable';
+  state: StandardTableState;
   effects: {
     fetch: Effect;
     create: Effect;
     update: Effect;
     remove: Effect;
+    fetchDetailInfo: Effect;
   };
   reducers: {
-    modalVisible: Reducer<CustomManageState>;
-    changgeConfirmLoading: Reducer<CustomManageState>;
-    save: Reducer<CustomManageState>;
+    modalVisible: Reducer<StandardTableState>;
+    changgeConfirmLoading: Reducer<StandardTableState>;
+    save: Reducer<StandardTableState>;
+    clear: Reducer<StandardTableState>;
   };
 }
 
-const accountManageModelType: AccountManageModelType = {
-  namespace: 'custommanage',
+const standardTableModelType: StandardTableModelType = {
+  namespace: 'standardtable',
   state: {
-    tableData: [],
+    tableData: {
+      list: [],
+      pagination: {},
+    },
     modalVisible: false,
     confirmLoading: false,
+    detailInfo: {},
   },
   effects: {
-    *fetch(_, { call, put }) {
-      const response = yield call(query, {}, '/sys/group/tree');
+    *fetch({ payload }, { call, put }) {
+      const response = yield call(queryPost, payload, '/sys/standardtable/list');
       if (response) {
         const { code, body } = response;
         if (code === 200) {
@@ -88,7 +69,8 @@ const accountManageModelType: AccountManageModelType = {
           confirmLoading: true,
         },
       });
-      const response = yield call(update, payload, '/sys/group/update');
+      yield call(delay);
+      const response = yield call(update, payload, '/sys/standardtable/update');
       yield put({
         type: 'changgeConfirmLoading',
         payload: {
@@ -122,7 +104,8 @@ const accountManageModelType: AccountManageModelType = {
           confirmLoading: true,
         },
       });
-      const response = yield call(create, payload, '/sys/group/save');
+      yield call(delay);
+      const response = yield call(create, payload, '/sys/standardtable/add');
       yield put({
         type: 'changgeConfirmLoading',
         payload: {
@@ -149,7 +132,7 @@ const accountManageModelType: AccountManageModelType = {
       }
     },
     *remove({ payload }, { call, put }) {
-      const response = yield call(remove, payload, '/sys/group/delete');
+      const response = yield call(remove, payload, '/sys/standardtable/delete');
       if (response) {
         const { code, body } = response;
         if (code === 200) {
@@ -160,6 +143,20 @@ const accountManageModelType: AccountManageModelType = {
             },
           });
           message.success('删除成功');
+        }
+      }
+    },
+    *fetchDetailInfo({ payload }, { call, put }) {
+      const response = yield call(query, payload, '/sys/standardtable/detail');
+      if (response) {
+        const { code, body } = response;
+        if (code === 200) {
+          yield put({
+            type: 'save',
+            payload: {
+              detailInfo: body,
+            },
+          });
         }
       }
     },
@@ -178,14 +175,20 @@ const accountManageModelType: AccountManageModelType = {
       };
     },
     save(state, { payload }) {
-      const { tableData, ...rest } = payload;
       return {
         ...state,
-        tableData: formatter(tableData),
-        ...rest,
+        ...payload,
+      };
+    },
+    // @ts-ignore
+    clear(state) {
+      return {
+        ...state,
+        modalVisible: false,
+        confirmLoading: false,
       };
     },
   },
 };
 
-export default accountManageModelType;
+export default standardTableModelType;

@@ -8,6 +8,7 @@ import {
   ARadioGroup,
 } from '@aiolosjs/components';
 import { FormInstance } from 'antd/es/form/Form';
+import { asyncFn } from '@/utils/utils';
 import { OperatorKeys } from './interface';
 
 export type ModelRef = {
@@ -217,6 +218,7 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
                 name="sysGroupId"
                 label="所属客户"
                 action="/sys/group/dic"
+                asyncFn={asyncFn}
                 formItemProps={formItemProps}
                 formatter={formatter}
                 rules={[
@@ -245,6 +247,7 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
                 name="roleId"
                 label="角色权限"
                 action="/sys/role/dic"
+                asyncFn={asyncFn}
                 formItemProps={formItemProps}
                 rules={[
                   {
@@ -267,6 +270,7 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
               <ADynamicTree
                 name="groupAuthorizedIds"
                 label="数据权限"
+                asyncFn={asyncFn}
                 action={action}
                 formatter={formatter}
                 formItemProps={{ ...formItemProps }}
@@ -276,6 +280,7 @@ const ModalDetailForm = forwardRef<ModelRef, ModalDetailFormProps>(
                     message: '请选择数据权限',
                   },
                 ]}
+                treeCheckParentStrictly
                 widgetProps={{
                   // @ts-ignore
                   getPopupContainer: () => document.querySelector('.ant-modal-wrap '),

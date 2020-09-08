@@ -59,6 +59,34 @@ export const AppRouter = [
     component: './user/settings',
     hideInMenu: true,
   },
+  {
+    name: '异常页',
+    icon: 'warning',
+    path: '/exception',
+    hideInMenu: true,
+    type: 'base',
+    routes: [
+      // exception
+      {
+        path: '/exception/403',
+        name: '403',
+        component: './Sys/Exception/403',
+        menuType: 2,
+      },
+      {
+        path: '/exception/404',
+        name: '404',
+        component: './Sys/Exception/404',
+        menuType: 2,
+      },
+      {
+        path: '/exception/500',
+        name: '500',
+        component: './Sys/Exception/500',
+        menuType: 2,
+      },
+    ],
+  },
 
   {
     component: './Sys/Exception/404',

@@ -24,13 +24,11 @@ export default defineConfig({
     ie: 11,
   },
   routes: pageRouter,
-  // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
-    // ...darkTheme,
     'primary-color': defaultSettings.primaryColor,
   },
   // @ts-ignore
-  title: false,
+  title: defaultSettings.title,
   ignoreMomentLocale: true,
   proxy,
   manifest: {

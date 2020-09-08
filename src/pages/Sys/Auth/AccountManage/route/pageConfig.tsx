@@ -39,7 +39,6 @@ export interface PageConfigProps<T> {
   detailFormItems?: RenderFormItemProps[];
 }
 
-
 function pageConfig<T>(): PageConfigProps<T> {
   return {
     name: '账号管理',
@@ -111,6 +110,7 @@ function pageConfig<T>(): PageConfigProps<T> {
             maxHeight: 360,
           },
           id: 'sysGroupId_s',
+          allowClear: true,
         },
       },
 
@@ -138,6 +138,7 @@ function pageConfig<T>(): PageConfigProps<T> {
         formItemProps,
         widgetProps: {
           id: 'roleId_',
+          allowClear: true,
         },
       },
       {
@@ -147,9 +148,10 @@ function pageConfig<T>(): PageConfigProps<T> {
         formItemProps,
         widgetProps: {
           placeholder: '请输入账号/姓名/手机号',
+          allowClear: true,
         },
       },
-    ]
+    ],
   };
 }
 

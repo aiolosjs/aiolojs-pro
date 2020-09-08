@@ -71,7 +71,7 @@ const accountManageModelType: AccountManageModelType = {
           confirmLoading: true,
         },
       });
-      const response = yield call(update, payload, '/sys/user/update');
+      const response = yield call(update, payload, '/sys/role/update');
       yield put({
         type: 'changgeConfirmLoading',
         payload: {
@@ -105,7 +105,7 @@ const accountManageModelType: AccountManageModelType = {
           confirmLoading: true,
         },
       });
-      const response = yield call(create, payload, '/sys/user/save');
+      const response = yield call(create, payload, '/sys/role/save');
       yield put({
         type: 'changgeConfirmLoading',
         payload: {

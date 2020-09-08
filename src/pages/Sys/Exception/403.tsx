@@ -4,8 +4,8 @@ import React from 'react';
 
 export default () => (
   <Result
-    status="500"
-    title="500"
+    status="403"
+    title="403"
     style={{
       background: 'none',
     }}

@@ -1,6 +1,6 @@
 {
   "name": "aiolojs-pro",
-  "version": "4.0.0",
+  "version": "1.0.0",
   "private": true,
   "description": "基于antd pro 改版的中台系统脚手架",
   "scripts": {

@@ -14,8 +14,7 @@ interface IRootState {
   login: LoginStateProps;
 }
 
-export interface AccountFormProps {
-}
+export interface AccountFormProps {}
 
 const errorMsg = {
   200: '登录成功',
@@ -26,7 +25,7 @@ const errorMsg = {
 const AccountForm: React.FC<AccountFormProps> = () => {
   const dispatch = useDispatch();
   const { login } = useSelector((state: IRootState) => state);
-  const { loading, image = '', statusCode = 200, isRefreshCode } = login;
+  const { loading, image = '', statusCode = 200, isRefreshCode, key } = login;
 
   function refreshCode() {
     dispatch({
@@ -43,7 +42,7 @@ const AccountForm: React.FC<AccountFormProps> = () => {
   function onFinish(value: any) {
     dispatch({
       type: 'login/loginIn',
-      payload: value,
+      payload: { ...value, key },
     });
   }
 

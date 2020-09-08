@@ -12,7 +12,8 @@ import { Result, Button } from 'antd';
 import RenderAuthorize from '@/components/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
-import { getAuthorityFromRouter } from '@/utils/utils';
+import { getAuthorityFromRouter, whiteListPath } from '@/utils/utils';
+import { IconMap } from '@/utils/constant';
 import { CurrentUser, UserNavMenu } from '@/models/user';
 
 // eslint-disable-next-line import/no-unresolved
@@ -66,9 +67,9 @@ const noMatch = (
     title="403"
     subTitle="对不起，你没有权限访问该页面"
     extra={
-      <Button type="primary">
-        <Link to="/user/login">登录</Link>
-      </Button>
+      <Link to="/">
+        <Button type="primary">返回首页</Button>
+      </Link>
     }
   />
 );
@@ -114,12 +115,22 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     return isLocalMenus ? getFlatMenus(formatter(route.routes)) : getFlatMenus(nav);
   }, [nav]);
 
-  const renderMenuData = isLocalMenus ? formatter(route.routes) : nav;
+  const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] => {
+    return menus.map(({ icon, children: menuChildren, ...item }) => ({
+      ...item,
+      icon: icon && IconMap[icon as string],
+      children: menuChildren && loopMenuItem(menuChildren),
+    }));
+  };
+
+  const renderMenuData = isLocalMenus ? formatter(route.routes) : loopMenuItem(nav);
 
   const Authorized = useMemo(() => {
     const flatMenuKeys = flatMenus.map((menu) => menu.path).filter((path) => path);
-    return RenderAuthorize(flatMenuKeys);
-  }, []);
+    const flatKeys = [...flatMenuKeys, ...whiteListPath];
+
+    return RenderAuthorize(flatKeys);
+  }, [flatMenus]);
 
   useEffect(() => {
     // 默认跳转到第一个 menuType=2 的 路径

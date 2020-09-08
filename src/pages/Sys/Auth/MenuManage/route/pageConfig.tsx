@@ -1,16 +1,8 @@
 import React from 'react';
 import { Tag } from 'antd';
-import * as ALLICONS from '@ant-design/icons';
 import { ColumnProps } from 'antd/lib/table';
 import { RenderFormItemProps } from '@/core/common/renderFormItem';
-
-const camelize = (string: string) => {
-  // eslint-disable-next-line no-useless-escape
-  const str = string.replace(/[\-_\s]+(.)?/g, function match(_: any, chr: string) {
-    return chr ? chr.toUpperCase() : '';
-  });
-  return str.substr(0, 1).toUpperCase() + str.substr(1);
-};
+import { IconMap } from '@/utils/constant';
 
 export interface PageConfigProps<T> {
   name: string;
@@ -49,11 +41,6 @@ function pageConfig<T>(): PageConfigProps<T> {
       {
         title: '授权标识',
         dataIndex: 'permission',
-        // render: text => (
-        //   <Ellipsis length={100} tooltip>
-        //     {text}
-        //   </Ellipsis>
-        // ),
       },
       {
         title: '排序',
@@ -68,8 +55,14 @@ function pageConfig<T>(): PageConfigProps<T> {
         dataIndex: 'icon',
         render: (text) => {
           if (text) {
-            const Icon = ALLICONS[`${camelize(text)}Outlined`];
-            return <Icon type={text} style={{ fontSize: 16, color: '#08c' }} />;
+            const Icon = React.cloneElement(IconMap[text], {
+              style: {
+                fontSize: 16,
+                color: '#08c',
+              },
+            });
+
+            return Icon;
           }
           return null;
         },

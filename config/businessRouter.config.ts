@@ -7,4 +7,12 @@ interface routerTypes {
   routes?: routerTypes[];
 }
 
-export default [] as routerTypes[];
+export default [
+  // {
+  //   name: '标准列表',
+  //   path: '/standardtable',
+  //   icon: 'unorderedList',
+  //   menuType: 2,
+  //   component: './StandardTable',
+  // },
+] as routerTypes[];

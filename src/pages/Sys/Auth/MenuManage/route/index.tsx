@@ -116,6 +116,10 @@ export default (): React.ReactNode => {
 
   const modalOkHandle = async () => {
     const fieldsValue = await detailFormRef.current?.form?.validateFields();
+    const { parentId } = fieldsValue ?? {};
+    Object.assign(fieldsValue, {
+      parentId: Array.isArray(parentId) ? parentId[0] : null,
+    });
     const fields = formaterObjectValue(fieldsValue);
     if (modalType === 'create') {
       modelReduceType.current = 'create';
@@ -145,6 +149,7 @@ export default (): React.ReactNode => {
         onSearch={onSearch}
         style={{ width: 350 }}
         placeholder="请输入目录、菜单或按钮名称"
+        allowClear
       />
     );
   };
@@ -155,20 +160,37 @@ export default (): React.ReactNode => {
         title: '操作',
         width: 120,
         render(_: any, record: MenuManageTableDataProps) {
-          const { id = -1, parentId, isActive, menuType } = record;
-          if (isActive) {
-            // parentId = 0
-            return (
-              <div>
-                {parentId === 0 ? (
-                  <Row>
+          const { id = -1, parentId, menuType } = record;
+          return (
+            <div>
+              {parentId === 0 ? (
+                <Row>
+                  <AuthBlock authority="sys:group:save">
+                    <Col span={6}>
+                      <a
+                        onClick={() => {
+                          showModalVisibel('create', {
+                            parentId: id,
+                            menuType,
+                          });
+                        }}
+                      >
+                        <FolderAddOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }} />
+                      </a>
+                    </Col>
+                  </AuthBlock>
+                </Row>
+              ) : (
+                <Row>
+                  {menuType !== 3 && (
                     <AuthBlock authority="sys:group:save">
                       <Col span={6}>
                         <a
                           onClick={() => {
                             showModalVisibel('create', {
+                              // parentName: name,
                               parentId: id,
-                              menuType,
+                              menuType: menuType === 2 ? 3 : 1,
                             });
                           }}
                         >
@@ -178,63 +200,38 @@ export default (): React.ReactNode => {
                         </a>
                       </Col>
                     </AuthBlock>
-                  </Row>
-                ) : (
-                  <Row>
-                    {menuType !== 3 && (
-                      <AuthBlock authority="sys:group:save">
-                        <Col span={6}>
-                          <a
-                            onClick={() => {
-                              showModalVisibel('create', {
-                                // parentName: name,
-                                parentId: id,
-                                menuType: menuType === 2 ? 3 : 1,
-                              });
-                            }}
-                          >
-                            <FolderAddOutlined
-                              style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }}
-                            />
-                          </a>
-                        </Col>
-                      </AuthBlock>
-                    )}
+                  )}
 
-                    <AuthBlock authority="sys:group:update">
-                      <Col span={6}>
-                        <a
-                          onClick={() => {
-                            showModalVisibel('update', record);
-                          }}
-                        >
-                          <EditOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }} />
+                  <AuthBlock authority="sys:group:update">
+                    <Col span={6}>
+                      <a
+                        onClick={() => {
+                          showModalVisibel('update', record);
+                        }}
+                      >
+                        <EditOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }} />
+                      </a>
+                    </Col>
+                  </AuthBlock>
+                  <AuthBlock authority="sys:group:delete">
+                    <Col span={6}>
+                      <Popconfirm
+                        title="确定删除吗？"
+                        placement="topRight"
+                        onConfirm={() => {
+                          deleteTableRowHandle(id);
+                        }}
+                      >
+                        <a>
+                          <DeleteOutlined style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }} />
                         </a>
-                      </Col>
-                    </AuthBlock>
-                    <AuthBlock authority="sys:group:delete">
-                      <Col span={6}>
-                        <Popconfirm
-                          title="确定删除吗？"
-                          placement="topRight"
-                          onConfirm={() => {
-                            deleteTableRowHandle(id);
-                          }}
-                        >
-                          <a>
-                            <DeleteOutlined
-                              style={{ fontSize: 18, color: 'rgba(0, 0, 0, 0.65)' }}
-                            />
-                          </a>
-                        </Popconfirm>
-                      </Col>
-                    </AuthBlock>
-                  </Row>
-                )}
-              </div>
-            );
-          }
-          return null;
+                      </Popconfirm>
+                    </Col>
+                  </AuthBlock>
+                </Row>
+              )}
+            </div>
+          );
         },
       },
     ];

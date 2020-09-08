@@ -119,18 +119,15 @@ export default (): React.ReactNode => {
     setFormUpdate({ id });
   };
 
-  const modalOkHandle = () => {
-    if (detailFormRef && detailFormRef.current) {
-      detailFormRef.current.form.validateFields().then((fieldsValue) => {
-        const fields = formaterObjectValue(fieldsValue);
-        if (modalType === 'create') {
-          modelReduceType.current = 'create';
-          setFormAdd(fields);
-        } else if (modalType === 'update') {
-          modelReduceType.current = 'update';
-          setFormUpdate(fields);
-        }
-      });
+  const modalOkHandle = async () => {
+    const fieldsValue = await detailFormRef.current?.form?.validateFields();
+    const fields = formaterObjectValue(fieldsValue);
+    if (modalType === 'create') {
+      modelReduceType.current = 'create';
+      setFormAdd(fields);
+    } else if (modalType === 'update') {
+      modelReduceType.current = 'update';
+      setFormUpdate(fields);
     }
   };
 

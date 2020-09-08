@@ -35,9 +35,7 @@ const UserSettings: React.FC = () => {
       detailFormRef.current.form.validateFields().then((fieldsValue) => {
         dispatch({
           type: 'user/updatePassword',
-          payload: {
-            payload: fieldsValue,
-          },
+          payload: fieldsValue,
         });
       });
     }

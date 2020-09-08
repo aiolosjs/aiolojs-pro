@@ -2,6 +2,7 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
+import { history } from 'umi';
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 
@@ -32,6 +33,20 @@ const errorHandler = (error: { response: Response }): Response => {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
 
+    // if (status === 403) {
+    //   history.push('/exception/403');
+    // } else if (status === 401) {
+    //   history.replace({
+    //     pathname: '/user/login',
+    //   });
+    // } else {
+    //   notification.error({
+    //     message: `请求错误 ${status}: ${url}`,
+    //     description: errorText,
+    //     duration: 0,
+    //   });
+    // }
+
     notification.error({
       message: `请求错误 ${status}: ${url}`,
       description: errorText,
@@ -56,6 +71,9 @@ const request = extend({
 });
 
 request.use(async (ctx, next) => {
+  Object.assign(ctx.req.options.headers ?? {}, {
+    token: localStorage.getItem('token'),
+  });
   await next();
   const { res } = ctx;
 

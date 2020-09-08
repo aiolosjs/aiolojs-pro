@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'dva';
+import { useSelector } from 'umi';
 import { CurrentUser } from '@/models/user';
 import defaultSettings from '../../../config/defaultSettings';
 
@@ -11,19 +11,21 @@ export interface AuthBlockProps {
 }
 interface IRootState {
   user: {
-    currentUser:CurrentUser
+    currentUser: CurrentUser;
   };
 }
 
 const AuthBlock: React.FC<AuthBlockProps> = ({ children, authority }) => {
-  const { user:{currentUser} } = useSelector((state: IRootState) => state);
+  const {
+    user: { currentUser },
+  } = useSelector((state: IRootState) => state);
   const { btn = [] } = currentUser;
 
   if (isLocalMenus) {
     return <>{children}</>;
   }
 
-  const content = btn.findIndex(item => item.permission === authority) !== -1 ? children : null;
+  const content = btn.findIndex((item) => item.permission === authority) !== -1 ? children : null;
   return <>{content}</>;
 };
 

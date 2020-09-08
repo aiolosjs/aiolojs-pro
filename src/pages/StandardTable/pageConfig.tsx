@@ -20,55 +20,61 @@ export interface PageConfigProps<T> {
 
 function pageConfig<T>(): PageConfigProps<T> {
   return {
-    name: '客户管理',
-    path: 'permission/custommanage',
-
+    name: '标准表格',
+    path: 'standardtable',
+    tableColumns: [
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      },
+      {
+        title: '性别',
+        dataIndex: 'sex',
+      },
+    ],
+    searchForms: [
+      {
+        widget: 'AInput',
+        name: 'name',
+        label: '姓名',
+        formItemProps,
+        widgetProps: {},
+      },
+    ],
     detailFormItems: [
       {
         widget: 'AInput',
         name: 'id',
+        initialValue: -1,
         colSpan: 0,
       },
       {
         widget: 'AInput',
-        name: 'parentId',
-        colSpan: 0,
-      },
-      {
-        widget: 'AInput',
-        name: 'groupName',
-        label: '客户名称',
+        name: 'name',
+        label: '姓名',
         required: true,
         colSpan: 24,
         formItemProps,
       },
       {
-        widget: 'AInput',
-        name: 'parentName',
-        label: '上级客户名称',
+        widget: 'ASelect',
+        name: 'sex',
+        label: '性别',
         required: true,
-        colSpan: 24,
-        formItemProps,
-        widgetProps: {
-          disabled: true,
-        },
-      },
-      {
-        widget: 'AInput',
-        name: 'linkman',
-        label: '联系人',
-        required: true,
-        colSpan: 24,
-        formItemProps,
-      },
-      {
-        widget: 'AInputPhone',
-        name: 'mobile',
-        label: '联系电话',
-        required: true,
+        selectOptions: [
+          {
+            key: '男',
+            value: '男',
+          },
+          {
+            key: '女',
+            value: '女',
+          },
+        ],
         colSpan: 24,
         formItemProps,
       },
+
       {
         widget: 'AInputTextArea',
         name: 'remark',
