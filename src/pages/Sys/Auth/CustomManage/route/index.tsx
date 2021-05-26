@@ -2,20 +2,21 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Input, Card, Modal, Popconfirm, Row, Col, Popover, Descriptions } from 'antd';
 import uniq from 'lodash/uniq';
 import Highlighter from 'react-highlight-words';
-import { ColumnProps } from 'antd/lib/table';
+import type { ColumnProps } from 'antd/lib/table';
 import AuthBlock from '@/components/AuthBlock';
 import { useSelector, useDispatch } from 'umi';
 import { useQueryFormParams } from '@/utils/hooks';
 import TableList from '@/components/TableList';
-import { DvaLoadingState } from '@/utils/types';
+import type { DvaLoadingState } from '@/utils/types';
 import { formaterObjectValue, formItemAddInitValue } from '@/utils/utils';
-import { RenderFormItemProps } from '@/core/common/renderFormItem';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { UserAddOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import { CustomManageTableDataProps, CustomManageState } from '../models/custommanage';
-import DetailFormInfo, { ModelRef } from './ModalDetailForm';
-import { OperatorKeys, OperatorType } from './interface';
+import type { CustomManageTableDataProps, CustomManageState } from '../models/custommanage';
+import type { ModelRef } from './ModalDetailForm';
+import DetailFormInfo from './ModalDetailForm';
+import type { OperatorKeys, OperatorType } from './interface';
 
 import pageConfig from './pageConfig';
 

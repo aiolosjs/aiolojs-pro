@@ -10,21 +10,19 @@ type DefaultSettings = ProSettings & {
 };
 
 const proSettings = {
-  navTheme: 'dark',
-  // 拂晓蓝
+  navTheme: 'light',
   primaryColor: '#1890ff',
-  layout: 'side',
+  layout: 'mix',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
-  colorWeak: false,
   menu: {
     locale: true,
   },
   title: '系统脚手架',
   pwa: false,
-  debugLocal: false,
-  debugLocalDomain: 'http://192.168.22.52:9000',
+  debugLocal: true,
+  debugLocalDomain: 'http://192.168.22.68:9000',
   isLocalMenus: env === 'development',
 } as DefaultSettings;
 

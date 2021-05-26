@@ -1,8 +1,8 @@
 import { parse } from 'querystring';
 import pathRegexp from 'path-to-regexp';
-import { Route } from '@/models/connect';
-import { RenderFormItemProps } from '@/core/common/renderFormItem';
-import { query } from '@/services/api';
+import type { Route } from '@/models/connect';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
+import { queryAsyncFn } from '@/services/api';
 
 export const whiteListPath = ['/account/settings'];
 
@@ -14,9 +14,8 @@ type ConfigRoutes = {
 };
 
 export const asyncFn = (params: string): Promise<any> => {
-  return query(params).then((res) => res.body);
+  return queryAsyncFn(params).then((res) => res.body);
 };
-
 export const delay = (timeout = 300) => {
   return new Promise((resolve) => {
     setTimeout(() => {

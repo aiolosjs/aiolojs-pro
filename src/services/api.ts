@@ -7,6 +7,12 @@ export async function query(params: any, url: string): Promise<any> {
   });
 }
 
+export async function queryAsyncFn(url: string): Promise<any> {
+  return request(url, {
+    method: 'GET',
+  });
+}
+
 export async function queryPost(data: any, url: string): Promise<any> {
   return request(url, {
     method: 'POST',

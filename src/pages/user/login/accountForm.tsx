@@ -3,7 +3,7 @@ import { Form, Row, Col, Alert, Button } from 'antd';
 import { useSelector, useDispatch } from 'umi';
 import { UserOutlined, LockOutlined, SecurityScanOutlined } from '@ant-design/icons';
 
-import { LoginStateProps } from '@/models/login';
+import type { LoginStateProps } from '@/models/login';
 import { AInput } from '@aiolosjs/components';
 import AInputPassword from '@aiolosjs/components/lib/form/ainput/password';
 import QRcode from './component/QRcode';

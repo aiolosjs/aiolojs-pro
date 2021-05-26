@@ -60,7 +60,7 @@ const Model: LoginModelType = {
         formData.append(key, payload[key]);
       });
 
-      const response = yield call(queryPost, formData, '/sys/login');
+      const response = yield call(queryPost, formData, '/mgmt/account/login');
 
       const { code, body } = response;
       yield put({
@@ -129,7 +129,7 @@ const Model: LoginModelType = {
     },
 
     *getImageCaptcha(_, { call, put }) {
-      const response = yield call(query, {}, '/sys/login');
+      const response = yield call(query, {}, '/common/image/code');
       if (response) {
         const { code, body } = response;
         if (code === 200) {
@@ -155,7 +155,7 @@ const Model: LoginModelType = {
     },
     *logout(_, { call, put }) {
       if (window.location.pathname !== '/user/login') {
-        yield call(query, {}, '/sys/logout');
+        yield call(query, {}, '/common/logout');
         localStorage.removeItem('token');
         yield put({
           type: 'changeLoginStatus',

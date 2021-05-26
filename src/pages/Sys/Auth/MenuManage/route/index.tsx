@@ -4,18 +4,19 @@ import { FolderAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/ico
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import uniq from 'lodash/uniq';
 import Highlighter from 'react-highlight-words';
-import { ColumnProps } from 'antd/lib/table';
+import type { ColumnProps } from 'antd/lib/table';
 import AuthBlock from '@/components/AuthBlock';
 import { useSelector, useDispatch } from 'umi';
 import { useQueryFormParams } from '@/utils/hooks';
 import TableList from '@/components/TableList';
-import { DvaLoadingState } from '@/utils/types';
+import type { DvaLoadingState } from '@/utils/types';
 import { formaterObjectValue } from '@/utils/utils';
-import {
+import type {
   MenuManageTableDataProps,
   MenuManageState,
 } from '@/pages/Sys/Auth/MenuManage/models/menumanage';
-import DetailFormInfo, { ModelRef } from './ModalDetailForm';
+import type { ModelRef } from './ModalDetailForm';
+import DetailFormInfo from './ModalDetailForm';
 
 import pageConfig from './pageConfig';
 

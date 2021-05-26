@@ -1,14 +1,14 @@
 import React, { forwardRef, useImperativeHandle, useCallback, useState } from 'react';
 import { Form, Row, Col, Tag } from 'antd';
-import { FormInstance } from 'antd/es/form/Form';
-import { TreeNodeNormal } from 'antd/lib/tree/Tree';
-import { RadioChangeEvent } from 'antd/lib/radio/interface';
+import type { FormInstance } from 'antd/es/form/Form';
+import type { TreeNodeNormal } from 'antd/lib/tree/Tree';
+import type { RadioChangeEvent } from 'antd/lib/radio/interface';
 import { AInput, ARadioGroup, ADynamicTree } from '@aiolosjs/components';
 import AInputNumber from '@aiolosjs/components/lib/form/ainput/number';
 import AInputTextArea from '@aiolosjs/components/lib/form/ainput/textarea';
 import { asyncFn } from '@/utils/utils';
-import { OperatorKeys } from '.';
-import { MenuManageTableDataProps } from '../models/menumanage';
+import type { OperatorKeys } from '.';
+import type { MenuManageTableDataProps } from '../models/menumanage';
 
 export type ModelRef = {
   form: FormInstance;
