@@ -1,5 +1,5 @@
-import { DvaLoadingState } from '@/utils/types';
-import { StandardTableState } from './model';
+import type { DvaLoadingState } from '@/utils/types';
+import type { StandardTableState } from './model';
 
 export type OperatorKeys = 'fetch' | 'create' | 'update' | 'remove';
 export type OperatorType = { [K in OperatorKeys]?: string };

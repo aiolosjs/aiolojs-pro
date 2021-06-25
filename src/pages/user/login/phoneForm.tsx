@@ -3,7 +3,7 @@ import { Form, Row, Col, Alert, Button } from 'antd';
 import { SecurityScanOutlined } from '@ant-design/icons';
 
 import { useSelector, useDispatch } from 'umi';
-import { LoginStateProps } from '@/models/login';
+import type { LoginStateProps } from '@/models/login';
 import { AInput, ASelect } from '@aiolosjs/components';
 
 import styles from './style.less';

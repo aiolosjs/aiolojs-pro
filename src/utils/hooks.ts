@@ -1,15 +1,9 @@
 import { useState } from 'react';
 
 export interface IQueryFormParams {
-  form?: {
-    [key: string]: any;
-  };
-  query?: {
-    [key: string]: any;
-  };
-  pagination?: {
-    [key: string]: any;
-  };
+  form?: Record<string, any>;
+  query?: Record<string, any>;
+  pagination?: Record<string, any>;
 }
 export interface IQueryFormParamsResult {
   setQuery: (query: object) => void;

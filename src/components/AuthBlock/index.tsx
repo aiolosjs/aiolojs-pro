@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'umi';
-import { CurrentUser } from '@/models/user';
+import type { CurrentUser } from '@/models/user';
 import defaultSettings from '../../../config/defaultSettings';
 
 const { isLocalMenus } = defaultSettings;

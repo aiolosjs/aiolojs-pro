@@ -7,11 +7,12 @@ import AuthBlock from '@/components/AuthBlock';
 import { useQueryFormParams } from '@/utils/hooks';
 import SearchForms from '@/components/SearchForm';
 import TableList from '@/components/TableList';
-import { DvaLoadingState } from '@/utils/types';
+import type { DvaLoadingState } from '@/utils/types';
 import { formaterObjectValue } from '@/utils/utils';
-import { AccountManageTableDataProps, AccountManageState } from '../models/accountmanage';
-import DetailFormInfo, { ModelRef } from './ModalDetailForm';
-import { OperatorKeys, OperatorType } from './interface';
+import type { AccountManageTableDataProps, AccountManageState } from '../models/accountmanage';
+import type { ModelRef } from './ModalDetailForm';
+import DetailFormInfo from './ModalDetailForm';
+import type { OperatorKeys, OperatorType } from './interface';
 
 import pageConfig from './pageConfig';
 

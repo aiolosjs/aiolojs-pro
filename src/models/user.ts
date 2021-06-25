@@ -1,4 +1,4 @@
-import { Reducer, Effect } from 'umi';
+import type { Reducer, Effect } from 'umi';
 import { message } from 'antd';
 import { queryCurrent, query as queryUsers } from '@/services/user';
 import { update } from '@/services/api';

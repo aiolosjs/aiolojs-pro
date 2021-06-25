@@ -8,14 +8,15 @@ import { useQueryFormParams } from '@/utils/hooks';
 import SearchForms from '@/components/SearchForm';
 import TableList from '@/components/TableList';
 import { formaterObjectValue, formItemAddInitValue } from '@/utils/utils';
-import { RenderFormItemProps } from '@/core/common/renderFormItem';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
 
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { StandardTableDataProps } from './model';
-import DetailFormInfo, { ModelRef } from './ModalDetailForm';
+import type { StandardTableDataProps } from './model';
+import type { ModelRef } from './ModalDetailForm';
+import DetailFormInfo from './ModalDetailForm';
 import DetailInfo from './Detail';
 
-import { OperatorKeys, OperatorType, IRootState } from './interface';
+import type { OperatorKeys, OperatorType, IRootState } from './interface';
 
 import pageConfig from './pageConfig';
 
@@ -33,9 +34,11 @@ export default (): React.ReactNode => {
   const modelReduceType = useRef<OperatorKeys>('fetch');
   const detailFormRef = useRef<ModelRef | null>(null);
 
-  const { searchForms = [], tableColumns = [], detailFormItems = [] } = pageConfig<
-    StandardTableDataProps
-  >();
+  const {
+    searchForms = [],
+    tableColumns = [],
+    detailFormItems = [],
+  } = pageConfig<StandardTableDataProps>();
 
   const [modalTitle, setModalTitle] = useState<string | undefined>();
   const [currentItem, setCurrentItem] = useState<StandardTableDataProps | {}>({});

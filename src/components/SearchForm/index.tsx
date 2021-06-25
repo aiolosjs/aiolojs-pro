@@ -1,8 +1,9 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Form, Row, Col, Button } from 'antd';
-import { FormProps, FormInstance } from 'antd/es/form/Form';
+import type { FormProps, FormInstance } from 'antd/es/form/Form';
 
-import renderFormItem, { RenderFormItemProps } from '@/core/common/renderFormItem';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
+import renderFormItem from '@/core/common/renderFormItem';
 
 export type SearchFormRef = {
   form: FormInstance;

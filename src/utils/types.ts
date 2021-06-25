@@ -18,6 +18,6 @@ export interface ITableData<T> {
 
 export interface DvaLoadingState {
   global: boolean;
-  models: { [type: string]: boolean | undefined };
-  effects: { [type: string]: boolean | undefined };
+  models: Record<string, boolean | undefined>;
+  effects: Record<string, boolean | undefined>;
 }

@@ -1,20 +1,20 @@
-import ProLayout, {
+import type {
   MenuDataItem,
   BasicLayoutProps as ProLayoutProps,
   Settings,
-  SettingDrawer,
-  DefaultFooter,
   ProSettings,
 } from '@ant-design/pro-layout';
+import ProLayout, { SettingDrawer, DefaultFooter } from '@ant-design/pro-layout';
 import React, { useEffect, useState, useMemo } from 'react';
-import { Link, connect, Dispatch, history } from 'umi';
+import type { Dispatch } from 'umi';
+import { Link, connect, history } from 'umi';
 import { Result, Button } from 'antd';
 import RenderAuthorize from '@/components/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
-import { ConnectState } from '@/models/connect';
+import type { ConnectState } from '@/models/connect';
 import { getAuthorityFromRouter, whiteListPath } from '@/utils/utils';
 import { IconMap } from '@/utils/constant';
-import { CurrentUser, UserNavMenu } from '@/models/user';
+import type { CurrentUser, UserNavMenu } from '@/models/user';
 
 // eslint-disable-next-line import/no-unresolved
 import defaultSettings from 'config/defaultSettings';
@@ -74,9 +74,7 @@ const noMatch = (
   />
 );
 export interface BasicLayoutProps extends ProLayoutProps {
-  breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
-  };
+  breadcrumbNameMap: Record<string, MenuDataItem>;
   route: ProLayoutProps['route'] & {
     authority: string[];
   };
@@ -85,9 +83,7 @@ export interface BasicLayoutProps extends ProLayoutProps {
   currentUser: CurrentUser;
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
-  breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
-  };
+  breadcrumbNameMap: Record<string, MenuDataItem>;
 };
 /**
  * use Authorized check all menu item
@@ -113,7 +109,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
 
   const flatMenus = useMemo(() => {
     return isLocalMenus ? getFlatMenus(formatter(route.routes)) : getFlatMenus(nav);
-  }, [nav]);
+  }, [nav, route.routes]);
 
   const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] => {
     return menus.map(({ icon, children: menuChildren, ...item }) => ({
@@ -148,7 +144,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     if (location.pathname === '/') {
       jumpToDefaultPath();
     }
-  }, [location.pathname]);
+  }, [location.pathname, flatMenus]);
 
   useEffect(() => {
     if (dispatch) {

@@ -1,5 +1,6 @@
-import { Reducer } from 'redux';
-import defaultSettings, { DefaultSettings } from '../../config/defaultSettings';
+import type { Reducer } from 'redux';
+import type { DefaultSettings } from '../../config/defaultSettings';
+import defaultSettings from '../../config/defaultSettings';
 
 export interface SettingModelType {
   namespace: 'settings';

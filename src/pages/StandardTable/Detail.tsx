@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'umi';
 import { Card, Descriptions } from 'antd';
 
-import { IRootState } from './interface';
-import { StandardTableDataProps } from './model';
+import type { IRootState } from './interface';
+import type { StandardTableDataProps } from './model';
 
 export interface DetailProps {
   currentItem: Partial<StandardTableDataProps>;

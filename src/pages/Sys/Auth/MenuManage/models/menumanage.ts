@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { Reducer, Effect } from 'umi';
+import type { Reducer, Effect } from 'umi';
 import { create, update, remove, query } from '@/services/api';
 
 function formatter(data: MenuManageTableDataProps[] = [], dna: string) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'umi';
-import { LoginStateProps } from '@/models/login';
+import type { LoginStateProps } from '@/models/login';
 import styles from './style.less';
 import defaultSettings from '../../../../config/defaultSettings';
 import AccountForm from './accountForm';

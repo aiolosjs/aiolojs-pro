@@ -1,6 +1,6 @@
 import React from 'react';
 import * as AiolosJSComponents from '@aiolosjs/components';
-import { IBaseWidgetProps } from '@aiolosjs/components/lib/form/types';
+import type { IBaseWidgetProps } from '@aiolosjs/components/lib/form/types';
 import { asyncFn } from '@/utils/utils';
 
 import { tuple } from '@/utils/types';

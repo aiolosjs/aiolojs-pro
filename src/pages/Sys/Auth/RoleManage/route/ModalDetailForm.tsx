@@ -1,9 +1,10 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Form, Row, Col } from 'antd';
-import { FormInstance } from 'antd/es/form/Form';
+import type { FormInstance } from 'antd/es/form/Form';
 
-import renderFormItem, { RenderFormItemProps } from '@/core/common/renderFormItem';
-import { OperatorKeys } from './interface';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
+import renderFormItem from '@/core/common/renderFormItem';
+import type { OperatorKeys } from './interface';
 
 export type ModelRef = {
   form: FormInstance;
@@ -11,7 +12,7 @@ export type ModelRef = {
 
 export interface ModalDetailFormProps {
   formItems: RenderFormItemProps[];
-  currentItem?: { [key: string]: any };
+  currentItem?: Record<string, any>;
   modalType?: OperatorKeys;
 }
 

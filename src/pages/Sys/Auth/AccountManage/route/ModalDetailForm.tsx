@@ -7,16 +7,16 @@ import {
   ADynamicTree,
   ARadioGroup,
 } from '@aiolosjs/components';
-import { FormInstance } from 'antd/es/form/Form';
+import type { FormInstance } from 'antd/es/form/Form';
 import { asyncFn } from '@/utils/utils';
-import { OperatorKeys } from './interface';
+import type { OperatorKeys } from './interface';
 
 export type ModelRef = {
   form: FormInstance;
 };
 
 export interface ModalDetailFormProps {
-  currentItem: { [key: string]: any };
+  currentItem: Record<string, any>;
   modalType: OperatorKeys;
 }
 

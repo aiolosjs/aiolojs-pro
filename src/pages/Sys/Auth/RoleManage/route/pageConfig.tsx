@@ -1,5 +1,5 @@
-import { ColumnProps } from 'antd/lib/table';
-import { RenderFormItemProps } from '@/core/common/renderFormItem';
+import type { ColumnProps } from 'antd/lib/table';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
 
 const formItemProps = {
   labelCol: {

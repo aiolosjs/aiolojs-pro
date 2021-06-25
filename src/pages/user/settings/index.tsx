@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { Descriptions, Card, Modal } from 'antd';
 import { useSelector, useDispatch } from 'umi';
-import { UserModelState } from '@/models/user';
+import type { UserModelState } from '@/models/user';
 
-import DetailFormInfo, { Ref } from './modalDetailForm';
+import type { Ref } from './modalDetailForm';
+import DetailFormInfo from './modalDetailForm';
 
 interface IRootState {
   user: UserModelState;

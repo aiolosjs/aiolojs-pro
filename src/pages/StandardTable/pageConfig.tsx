@@ -1,5 +1,5 @@
-import { ColumnProps } from 'antd/lib/table';
-import { RenderFormItemProps } from '@/core/common/renderFormItem';
+import type { ColumnProps } from 'antd/lib/table';
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
 
 const formItemProps = {
   labelCol: {
@@ -31,6 +31,10 @@ function pageConfig<T>(): PageConfigProps<T> {
         title: '性别',
         dataIndex: 'sex',
       },
+      {
+        title: '性别1',
+        dataIndex: 'sex1',
+      },
     ],
     searchForms: [
       {
@@ -52,6 +56,14 @@ function pageConfig<T>(): PageConfigProps<T> {
         widget: 'AInput',
         name: 'name',
         label: '姓名',
+        required: true,
+        colSpan: 24,
+        formItemProps,
+      },
+      {
+        widget: 'AInput',
+        name: 'name1',
+        label: '姓名1',
         required: true,
         colSpan: 24,
         formItemProps,

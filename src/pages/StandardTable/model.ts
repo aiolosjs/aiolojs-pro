@@ -1,7 +1,7 @@
 import { message } from 'antd';
-import { Reducer, Effect } from 'umi';
+import type { Reducer, Effect } from 'umi';
 import { query, create, update, remove, queryPost } from '@/services/api';
-import { ITableData } from '@/utils/types';
+import type { ITableData } from '@/utils/types';
 import { delay } from '@/utils/utils';
 
 export interface StandardTableDataProps {

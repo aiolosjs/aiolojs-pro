@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Form, Row, Col } from 'antd';
-import { FormInstance } from 'antd/es/form/Form';
+import type { FormInstance } from 'antd/es/form/Form';
 import AInputPassword from '@aiolosjs/components/lib/form/ainput/password';
 
 export type Ref = {

@@ -7,17 +7,18 @@ import { useSelector, useDispatch } from 'umi';
 import { useQueryFormParams } from '@/utils/hooks';
 import SearchForms from '@/components/SearchForm';
 import TableList from '@/components/TableList';
-import { DvaLoadingState } from '@/utils/types';
+import type { DvaLoadingState } from '@/utils/types';
 import { formaterObjectValue, formItemAddInitValue } from '@/utils/utils';
-import { RenderFormItemProps } from '@/core/common/renderFormItem';
-import {
+import type { RenderFormItemProps } from '@/core/common/renderFormItem';
+import type {
   RoleManageTableDataProps,
   RoleManageState,
 } from '@/pages/Sys/Auth/RoleManage/models/rolemanage';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import DetailFormInfo, { ModelRef } from './ModalDetailForm';
+import type { ModelRef } from './ModalDetailForm';
+import DetailFormInfo from './ModalDetailForm';
 
-import { OperatorKeys, OperatorType } from './interface';
+import type { OperatorKeys, OperatorType } from './interface';
 
 import pageConfig from './pageConfig';
 

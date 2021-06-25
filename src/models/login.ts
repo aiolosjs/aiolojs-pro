@@ -1,4 +1,5 @@
-import { history, Reducer, Effect } from 'umi';
+import type { Reducer, Effect } from 'umi';
+import { history } from 'umi';
 import { message } from 'antd';
 
 import { queryPost, query } from '@/services/api';
@@ -11,7 +12,7 @@ export interface LoginStateProps {
   statusCode?: number;
   isRefreshCode?: boolean;
   mobileValid?: boolean;
-  mobiles?: Array<{ key: string; value: string }>;
+  mobiles?: { key: string; value: string }[];
 }
 
 export interface LoginModelType {
